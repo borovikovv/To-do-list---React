@@ -27,5 +27,14 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "description": "Todo application",
+  "main": "index.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "To-do-list---React"
+  },
+  "author": "borovikovv",
+  "license": "ISC"
 }

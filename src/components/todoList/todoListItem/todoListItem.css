@@ -1,0 +1,18 @@
+.todo-list-item {
+    cursor: pointer;
+}
+
+.btn-item{
+    width: 35px;
+}
+.btn-outline-danger {
+    margin-left: 5px;
+}
+.done {
+    text-decoration: line-through;
+}
+.importantItem {
+    color: steelblue;
+    font-weight: bold;
+
+}

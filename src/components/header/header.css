@@ -1,0 +1,19 @@
+.header {
+    display: grid;
+}
+.header > .header-one{
+    grid-row-start: 1;
+    justify-self: start;
+    align-self: end;
+}
+    .header-one > h1 {
+        font-size: 34px;
+    }
+.header > .header-two{
+    grid-row-end: 2;
+    align-self: center;
+}
+    .header-two > h2 {
+        font-size: 16px;
+        color: grey;
+    }

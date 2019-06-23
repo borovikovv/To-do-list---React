@@ -1,0 +1,15 @@
+.add-item {
+    display: grid;
+    justify-items: end;
+}
+
+.add-item > .btn {
+    border: solid rgba(128, 128, 128, 0.344) 1px;
+    margin-top: 10px;
+    width: 125px;
+    height: 38px;
+}
+.add-item > .add-item-form {
+    margin-right: 4px;
+    margin-top: 10px;
+}
