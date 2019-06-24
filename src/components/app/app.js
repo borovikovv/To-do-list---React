@@ -17,7 +17,8 @@ export default class App extends Component {
             this.createItem("Test task")
         ],
 
-        term: ''
+        term: '',
+        filter: 'all'
     };
 
     createItem(label) {
@@ -86,73 +87,62 @@ export default class App extends Component {
         });
     }
 
-    navFilter(items, set) {
-        items.filter((item) => {
-            item.done.indexOf(set) 
-        })
-    }
 
-    doneListBtn = () => {
-        this.setState(({term}) => {
-            const doneItems = this.state.todoData.filter((el) => el.done);
-            return{
-                term: doneItems
-            }
-        })
-        
-    }
-
-    activeListBtn = () => {
-        this.setState(({todoData}) => {
-            const activeItems = this.state.todoData.filter((el) => !el.done);
-            return{
-                todoData: activeItems
-            }
-        })        
-    }
-
-    allListBtn = () => {
-        this.setState(({todoData}) => {
-            return{
-                todoData: todoData
-            }
-        })
-    }
-
-    searchLabel = (items, term) => {
+    onSearchLabel = (items, term) => {
         if(term.length === 0) {
             return items;
         }
         return  items.filter((item) => {
-            return item.label.toLowerCase().indexOf(term.toLowerCase()) > -1;
+        return item.label.toLowerCase().indexOf(term.toLowerCase()) > -1;
         });
     }
 
-    onSearchChange =(term) => {
+    onNavFilter = (items, filter) => {
+        switch(filter){
+            case 'all':
+                return items;
+            case 'active':
+                return items.filter((item) => !item.done);
+            case 'done':
+                return items.filter((item) => item.done);
+            default: 
+            return items;
+        }
+    }
+
+
+    onSearchChange = (term) => {
         this.setState({term})
+    }
+
+    onNavChange = (filter) => {
+        this.setState({filter})
     }
 
     render() {
 
-        const { todoData, term } = this.state
+        const { todoData, term, filter } = this.state
         const doneCount = this.state.todoData.filter((el) => el.done).length;
         const todoCount = this.state.todoData.length - doneCount;
-        const actualTerm = this.searchLabel(todoData, term);
+        const actualTerm = this.onNavFilter(this.onSearchLabel(todoData, term), filter);
 
         return(
             <div>
-                <Header todo={todoCount} done={doneCount} />
-                <SearchList onSearchChange={ this.onSearchChange } />
-                <SearchNav
-                    allBtn={ this.allListBtn } 
-                    activeBtn={ this.activeListBtn } 
-                    doneBtn={ this.doneListBtn } />
+                <Header 
+                    todo={todoCount} 
+                    done={doneCount} />
+                <SearchList 
+                    onSearchChange={ this.onSearchChange } />
+                <SearchNav 
+                    onNavChange={ this.onNavChange }
+                    filter={filter} />
                 <TodoList 
                     todos = { actualTerm }
                     onDeleted={ this.deletedItem }
                     onToggleImportant={ this.onToggleImportant }
                     onToggleDone={ this.onToggleDone } />
-                <AddItem addItem={ this.addItem }/>
+                <AddItem 
+                    addItem={ this.addItem }/>
             </div>
         )
     }

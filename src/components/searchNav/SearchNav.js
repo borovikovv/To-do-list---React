@@ -1,26 +1,36 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './searchNav.css';
 
-const SearchNav = ({allBtn, activeBtn, doneBtn}) => {
-    return (
-        <div className="btn-group">
-            <button
-            onClick={ allBtn }
-            type="button" className="btn btn-info">
-                All
-            </button>
-            <button 
-            onClick={ activeBtn }
-            type="button" className="btn btn-outline-secondary">
-                Active
-            </button>
-            <button 
-            onClick={ doneBtn }
-            type="button" className="btn btn-outline-secondary">
-                Done
-            </button>
-        </div>
-    )
-}
+export default class SearchNav extends Component {
 
-export default SearchNav;
+    buttons = [
+        { name: 'all', label: 'All' },
+        { name: 'active', label: 'Active' },
+        { name: 'done', label: 'Done' }
+        ]
+
+    render() {
+
+        const { filter, onNavChange } = this.props;
+
+        const buttons = this.buttons.map(({ name, label }) => {
+            const onActive = filter === name;
+            const clazz = onActive ? 'btn-info' : 'btn-outline-secondary';
+            return (
+                <button
+                    key={name}
+                    type="button" 
+                    className={`btn ${clazz}`}
+                    onClick={ () => onNavChange(name) }
+                    >
+                    { label }
+                </button>
+            )
+        });
+        return ( 
+            <div className="btn-group">
+                { buttons }
+            </div>
+        )
+    }
+}
